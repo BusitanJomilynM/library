@@ -29,14 +29,14 @@ class UpdateBookRequest extends FormRequest
             'book_barcode'=>'required|unique:books,book_barcode,'.$this->book->id,
             'book_title'=>'required',
             'book_author'=>'required',
-            'book_copyrightyear'=>'required',
+            // 'book_copyrightyear'=>'required',
             'book_sublocation'=>'required',
             'book_subject'=>'required',
             'book_keyword'=>'required',
             'book_publisher'=>'required',
-            'book_lccn'=>'required',
+            // 'book_lccn'=>'required',
             'book_isbn'=>'required',
-            'book_purchasedwhen'=>'required',
+            // 'book_purchasedwhen'=>'required',
           
         ];
     }
@@ -47,15 +47,15 @@ class UpdateBookRequest extends FormRequest
             'book_barcode.required' => 'Fill out book barcode',
             'book_title.required' => 'Fill out book title',
             'book_author.required' => "Fill out book's author",
-            'book_copyrightyear.required' => 'Fill out book release date',
-            'sublocation.required' => 'Select book location',
+            // 'book_copyrightyear.required' => 'Fill out book release date',
+            // 'sublocation.required' => 'Select book location',
             'book_sublocation.required' => 'Fill out tags ',
             'book_barcode.unique' => 'A book with that barcode is already registered',
            
             'book_publisher.required'=>'Fill out book publisher',
-            'book_lccn.required'=>'Fill out book LCCN',
+            // 'book_lccn.required'=>'Fill out book LCCN',
             'book_isbn.required'=>'Fill out book ISBN',
-            'book_purchasedwhen.required'=>'Fill out purchase date',
+            // 'book_purchasedwhen.required'=>'Fill out purchase date',
         ];
     }
 }

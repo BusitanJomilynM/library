@@ -14,6 +14,7 @@ class Book extends Model
         'book_callnumberdescription',
         'book_barcode',
         'book_title',
+        'book_abstract',
         'book_author',
         'book_copyrightyear',
         'book_sublocation',

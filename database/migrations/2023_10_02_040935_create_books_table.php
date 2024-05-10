@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('book_title');
+            $table->string('book_abstract');
             $table->string('book_callnumber');
             $table->string('book_callnumberdescription')->nullable();
             $table->string('book_barcode')->unique()->nullable();

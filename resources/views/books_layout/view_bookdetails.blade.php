@@ -15,85 +15,63 @@
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a>
 <br><br>
 
-    <table class="table table-bordered" style="width:100%" border="0">
+<div class="text-center">
+    <div class="form">
+        <h5>Title: {{ $book->book_title }}</h5>
+    </div>
+    <div class="form">
+        <h5>Author: {{ $book->book_author }}</h5>
+    </div>
+    <div class="form">
+        <h5>Abstract: {{ $book->book_abstract }}</h5>
+    </div>
+    <div class="form">
+        <h5>Copyright Year: {{ $book->book_copyrightyear }}</h5>
+    </div>
+    <div class="form">
+        <h5>Location: {{ $book->book_sublocation }}</h5>
+    </div>
+    <div class="form">
+        <h5>Accession Number: {{ $book->book_barcode }}</h5>
+    </div>
+    <div class="form">
+        <h5>Call Number: {{ $book->book_callnumber }} {{ $book->book_callnumberdescription }}</h5>
+    </div>
+    <div class="form">
+        <h5>Publisher: {{ $book->book_publisher }}</h5>
+    </div>
+    <div class="form">
+        <h5>Edition: {{ $book->book_edition }}</h5>
+    </div>
+    <div class="form">
+        <h5>ISBN: {{ $book->book_isbn }}</h5>
+    </div>
+    <div class="form">
+        <h5>Book Subject: {{ $book->book_keyword }}</h5>
+    </div>
+    <div class="form">
+        <h5>Course Subject the Book is Associated to:
+            @foreach($subjects as $subject)
+                @if(in_array($subject->id, json_decode($book->book_subject)))
+                    {{ $subject->subject_name }},
+                @endif
+            @endforeach
+        </h5>
+    </div>
 
-
-        
-      
-       <tr>
-        <td> <div class="form"><h5>Title: {{ $book->book_title }}</h5></div> 
-        <br>
-        <div class="form"><h5>Author: {{ $book->book_author }}</h5></div> 
-        <br>
-        <div class="form"><h5>Copyright Year: {{ $book->book_copyrightyear}}</h5></div> 
-        <br>
-        <div class="form"><h5>Location: {{ $book->book_sublocation}}</h5></div> 
-        <br>
-        <!-- <div class="form"><h5>Volume: {{ $book->book_volume}}</h5></div>
-        <br> -->
-
-        <td>
-        <div class="form"><h5>Accession Number: {{ $book->book_barcode}}</h5></div> 
-        <br>
-        <div class="form"><h5>Call Number: {{ $book->book_callnumber}} {{$book->book_callnumberdescription}}</h5></div> 
-        <br>
-        <div class="form"><h5>Publisher: {{ $book->book_publisher}}</h5></div> 
-        <br>
-        <!-- <div class="form"><h5>Date of Purchase: {{ $book->book_purchasedwhen}}</h5></div> 
-        <br> -->
-        <div class="form"><h5>Edition: {{ $book->book_edition}}</h5></div> 
-        <br>
-        <!-- <div class="form"><h5>LCCN: {{ $book->book_lccn}}</h5></div> 
-        <br> -->
-        <div class="form"><h5>ISBN: {{ $book->book_isbn}}</h5></div> 
-        <br>
-        <div class="form"><h5>Book Subject: {{ $book->book_keyword}}</h5></div> 
-
-        <!-- <div class="form">
-    <h5>Keyword:
-        <?php  
-        // $bookKeywords = json_decode($book->book_keyword);
-
-        // foreach ($keywords as $keyword) {
-        //     if (in_array($keyword->id, $bookKeywords)) {
-        //         echo $keyword->keyword;
-        //         echo ", ";
-        //     }
-        // }
-        // ?>
-    </h5>
-</div>  -->
-<div class="form">
-    <h5>Course Subject the Book is Associated to::
-        <?php  
-        $bookSubjects = json_decode($book->book_subject);
-
-        foreach ($subjects as $subject) {
-            if (in_array($subject->id, $bookSubjects)) {
-                echo $subject->subject_name;
-                echo ", ";
-            }
-        }
-        ?>
-    </h5>
-</div> 
 
 @if ($canSuggest)
-<tr><td colspan="2" class="center">
-<a data-toggle="modal" class="btn btn-primary" data-target="#createTagModal_{{$book->book_barcode}}" data-action="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Subjects</a>
-
-<!-- <a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordSuggestModal_{{$book->book_barcode}}" data-action="{{ route('keywordsuggest.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Keywords</a> -->
-
-</td></tr>
+    <div class="center">
+        <a data-toggle="modal" class="btn btn-primary" data-target="#createTagModal_{{ $book->book_barcode }}" data-action="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Subjects</a>
+    </div>
 @else
-    <tr>
-        <td colspan="2" class="center">
-            <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
-            <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span> Add Copy</a>
-            <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
-        </td>
-    </tr>
+    <div class="center">
+        <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
+        <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span> Add Copy</a>
+        <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
+    </div>
 @endif
+</div>
 <!-- Suggest Subject Modal -->
 <div class="modal fade" id="createTagModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createTagModalLabel_{{$book->book_barcode}}" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -205,6 +183,13 @@
     <div class="form-group">
         <label class="required">Title of the Book</label>
         <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{$book->book_title}}" minlength="1" maxlength="60" required>
+        @error('book_title')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label class="required">Abstract</label>
+        <input class="form-control @error('book_abstract') is-invalid @enderror" type="text" name="book_abstract" id="book_abstract" value="{{$book->book_abstract}}" minlength="2" maxlength="40" required>
         @error('book_title')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -393,7 +378,11 @@
         <input class="form-control" type="text" name="book_title" id="book_title" value="{{ $book->book_title }}" minlength="1" maxlength="60" readonly>
         <input type="hidden" name="book_title" value="{{ $book->book_title }}">
     </div>
-
+    <div class="form-group">
+        <label>Abstract of the Book</label>
+        <input class="form-control" type="text" name="book_abstract" id="book_abstract" value="{{ $book->book_abstract }}" minlength="1" maxlength="60" readonly>
+        <input type="hidden" name="book_abstract" value="{{ $book->book_abstract }}">
+    </div>
     <div class="row">
     <div class="col-md-4">
         <label>Book Callnumber</label>
@@ -546,10 +535,16 @@
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
+    <div class="form-group">
+       
+       <input class="form-control @error('book_abstract') is-invalid @enderror" type="text" name="book_abstract" id="book_abstract" value="{{$book->book_abstract}}" minlength="2" maxlength="40" hidden>
+       @error('book_author')
+           <span class="text-danger">{{$message}}</span>
+       @enderror
+   </div>
 
     <div class="form-group">
         <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{$book->book_callnumber}}" minlength="4" maxlength="25" hidden>
-      
     </div>
 
    

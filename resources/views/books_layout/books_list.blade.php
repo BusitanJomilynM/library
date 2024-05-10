@@ -303,6 +303,13 @@
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
+    <div class="form-group">
+        <label class="required">Abstract</label>
+        <input class="form-control @error('book_abstract') is-invalid @enderror" type="text" name="book_abstract" id="book_abstract"  minlength="2" maxlength="150" value="{{ old('book_abstract') }}" required>
+        @error('book_title')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
     <div class="row">
         <div class="col-md-4">
         <label class="required">Call Number</label>
