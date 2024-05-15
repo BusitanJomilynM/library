@@ -253,7 +253,7 @@
     </div> -->
 <br>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             <label class="required">Location</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" value="{{$book->book_sublocation}}" required>
@@ -267,7 +267,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <div class="form-group">
             <label class="required">Copyright Year</label>
             <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{ old('book_copyrightyear') }}" required>
@@ -280,9 +280,9 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
-    </div>
+    </div> -->
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             <label>Edition</label>
             <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{$book->book_edition}}" minlength="4" maxlength="50">
@@ -350,7 +350,6 @@
         <div class="form-group">
         <i>Textboxes marked with an asterisk are required.</i>
         </div>
-    </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -362,6 +361,8 @@
 </div>
 </div>
 <div>
+</div>
+
 
 <!-- Create Copy Modal -->
 <div class="modal fade" id="createCopyModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createCopyModalLabel" aria-hidden="true">
@@ -423,21 +424,21 @@
     </div> -->
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             <label>Location</label>
             <input class="form-control" type="text" name="book_sublocation" id="book_sublocation" value="{{ $book->book_sublocation }}" readonly>
             <input type="hidden" name="book_sublocation" value="{{ $book->book_sublocation }}">
         </div>
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <div class="form-group">
             <label>Copyright Year</label>
             <input class="form-control" type="text" name="book_copyrightyear" id="book_copyrightyear" value="{{ $book->book_copyrightyear }}" readonly>
             <input type="hidden" name="book_copyrightyear" id="book_copyrightyear" value="{{ $book->book_copyrightyear }}">
         </div>
-    </div>
-    <div class="col-md-4">
+    </div> -->
+    <div class="col-md-6">
         <div class="form-group">
             <label>Edition</label>
             <input class="form-control" type="text" name="book_edition" id="book_edition" value="{{ $book->book_edition }}" minlength="1" maxlength="60" readonly>
@@ -576,14 +577,14 @@
             @enderror
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       
         <input class="form-control" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{$book->book_copyrightyear}}" hidden>
         @error('book_copyrightyear')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-    
+     -->
 
     <div class="form-group">
     
@@ -699,6 +700,7 @@ $(".js-responsive2").select2({
 });
 
 </script>
+
 
 
 <style> 
