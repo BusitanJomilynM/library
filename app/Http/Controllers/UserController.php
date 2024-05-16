@@ -39,7 +39,9 @@ class UserController extends Controller
                     ->orWhere('email', 'like', '%' . request('search') . '%')
                     ->orWhere('school_id', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
             } else {
-                $users = User::paginate(10);
+                $users = DB::table('users')
+                ->select('*', 'users.id as user_id')
+                ->paginate(10);
             }
         } else {
             return redirect()->back();

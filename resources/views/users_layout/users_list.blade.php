@@ -58,7 +58,7 @@
     <td>
     <div class="btn-group">
         <a data-toggle="modal" class="btn btn-primary" data-target="#editUserModal_{{$user->id}}" data-action="{{ route('users.edit', $user->id) }}"><span>&#9776;</span> </a>
-        <a class="btn btn-success" href="{{ route('restorePassword', $user->id) }}" role="button"><span>&#9733;</span></a>
+        <a class="btn btn-success" href="{{ route('restorePassword', $user->user_id) }}" role="button"><span>&#9733;</span></a>
 
         @if($user->type == 'technician librarian')  
             @if($techcount>1 && $user->id != $userId)
