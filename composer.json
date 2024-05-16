@@ -16,7 +16,6 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "maatwebsite/excel": "^1.1",
-        "phpoffice/phpspreadsheet": "^1.0",
                         "setasign/fpdf": "^1.8"
     },
     "require-dev": {

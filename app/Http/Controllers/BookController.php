@@ -119,67 +119,69 @@ class BookController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(StoreBookRequest $request): \Illuminate\Http\RedirectResponse
-    {
-        $bookBarcode = $request->input('book_barcode');
-        $existingBook = Book::where('book_barcode', $bookBarcode)->first();
-    
-        $data = $request->all();
-    
-        // Split authors by comma and trim any extra whitespaces
-        $authors = explode(',', $data['book_author']);
-        $authors = array_map('trim', $authors);
-    
-        $subjects = $data['book_subject'];
-        $subjects = implode(',', array_map('trim', $subjects));
-    
-        // Remove empty elements from the array
-        $authors = array_filter($authors);
-    
-        $data['book_author'] = implode(', ', $authors);
-        if (is_array($data['book_subject'])) {
-            $data['book_subject'] = implode(', ', array_map('trim', $data['book_subject']));
-        }
-        // if (is_array($data['book_keyword'])) {
-        //     $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
-        // }
-    
-        $data['book_subject'] = json_encode($request->book_subject);
-        // $data['book_keyword'] = json_encode($request->book_keyword);
-    
-        // Check if the book call number matches any existing book
-        $existingBookWithSameCallNumber = Book::where('book_callnumber', $data['book_callnumber'])->first();
-    
-        if ($existingBookWithSameCallNumber) {
-            // If book title matches, create the book
-            if ($existingBookWithSameCallNumber->book_title === $data['book_title']) {
-                // Store the input data in the session
-                $request->session()->put('book_data', $data);
-    
-                Book::create($data);
-    
-                if ($existingBook) {
-                    return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that barcode is already registered.');
-                } else {
-                    return redirect()->route('books.index');
-                }
-            } else {
-                // If book title does not match, redirect back with error
-                return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that call number already exists, but with a different title.');
-            }
-        } else {
-            // If no book with the same call number exists, create the book
+{
+    $bookBarcode = $request->input('book_barcode');
+    $existingBook = Book::where('book_barcode', $bookBarcode)->first();
+
+    $data = $request->all();
+
+    // Split authors by comma and trim any extra whitespaces
+    $authors = explode(',', $data['book_author']);
+    $authors = array_map('trim', $authors);
+
+    // Remove empty elements from the array
+    $authors = array_filter($authors);
+
+    $data['book_author'] = implode(', ', $authors);
+    if (is_array($data['book_subject'])) {
+        $data['book_subject'] = implode(', ', array_map('trim', $data['book_subject']));
+    }
+
+    // Encode subjects as JSON
+    $data['book_subject'] = json_encode($request->book_subject);
+
+    // Extract the last 4 characters of book_callnumber as book_copyrightyear
+    $bookCallNumber = $data['book_callnumber'];
+    $bookCopyrightYear = substr($bookCallNumber, -4);
+
+    // Add book_copyrightyear to the data array
+    $data['book_copyrightyear'] = $bookCopyrightYear;
+
+    // Check if the book call number matches any existing book
+    $existingBookWithSameCallNumber = Book::where('book_callnumber', $bookCallNumber)->first();
+
+    if ($existingBookWithSameCallNumber) {
+        // If book title matches, create the book
+        if ($existingBookWithSameCallNumber->book_title === $data['book_title']) {
             // Store the input data in the session
             $request->session()->put('book_data', $data);
-    
+
             Book::create($data);
-    
+
             if ($existingBook) {
                 return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that barcode is already registered.');
             } else {
                 return redirect()->route('books.index');
             }
+        } else {
+            // If book title does not match, redirect back with error
+            return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that call number already exists, but with a different title.');
+        }
+    } else {
+        // If no book with the same call number exists, create the book
+        // Store the input data in the session
+        $request->session()->put('book_data', $data);
+
+        Book::create($data);
+
+        if ($existingBook) {
+            return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that barcode is already registered.');
+        } else {
+            return redirect()->route('books.index');
         }
     }
+}
+
         /**
      * Display the specified resource.
      *
@@ -546,9 +548,10 @@ class BookController extends Controller{
         // You can use $filteredBooksSets, $bookStatsSets, $subjectNamesListSets, and $subjectCodesListSets to pass to the PDF view
         
         if (!empty($filteredBooksSets)) {
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets', 'uniqueCallNumbersSets'))->setPaper('a4', 'portrait');            return $pdf->stream('booklist.pdf');
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets', 'uniqueCallNumbersSets'))->setPaper('a4', 'portrait');            
+            return $pdf->stream('booklist.pdf');
         } else {
-            return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects]);
+            return view('books_layout.booklist_pdf', ['books' => $books, 'courses' => $courses, 'subjects' => $subjects]);
         }
             }            
     

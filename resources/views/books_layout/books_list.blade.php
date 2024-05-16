@@ -352,7 +352,7 @@
 
 
     <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             <label class="required">Location</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" value="{{ old('book_sublocation') }}" required>
@@ -366,7 +366,7 @@
             @enderror
         </div>
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <div class="form-group">
             <label class="required">Copyright Year</label>
             <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{ old('book_copyrightyear') }}" required>
@@ -379,8 +379,8 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
-    </div>
-    <div class="col-md-4">
+    </div> -->
+    <div class="col-md-6">
         <div class="form-group">
             <label>Edition</label>
             <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" minlength="1" maxlength="50" value="{{ old('book_edition') }}">
