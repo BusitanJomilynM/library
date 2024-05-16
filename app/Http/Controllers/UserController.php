@@ -89,11 +89,10 @@ class UserController extends Controller
         $user->school_id = $request->school_id;
         $user->email = $request->email;
         $user->contact_number = $request->contact_number;
-        $user->password = bcrypt($request->school_id); // Hash the password
+        $user->password =$request->school_id;
         $user->type = $request->type;
         $user->save();
     
-        // Redirect back to the index page with a success message
         return redirect()->route('users.index')->with('success', 'User created successfully!');
     }    /**
      * Display the specified resource.
